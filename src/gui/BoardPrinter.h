@@ -2,7 +2,7 @@
 #define DARKFISH_BOARDPRINTER_H
 
 
-#include "Board.h"
+#include "../engine/Board.h"
 
 class BoardPrinter {
 public:
