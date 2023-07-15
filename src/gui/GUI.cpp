@@ -17,15 +17,15 @@ GUI::GUI(Board* board) : QMainWindow(), board(board) {
 
     int buttonSize = centralWidget->height() / 8;
 
-    for (int row = 0; row < 8; ++row) {
-        for (int col = 0; col < 8; ++col) {
+    for (int rank = Board::BOARD_ROWS - 1; rank >= 0; --rank) {
+        for (int file = 0; file < Board::BOARD_COLS; ++file) {
             auto* button = new QPushButton(this);
-            button->setObjectName("ChessButton_" + QString::number(row) + "_" + QString::number(col));
+            button->setObjectName("ChessButton_" + QString::number(rank) + "_" + QString::number(file));
             button->setFixedSize(buttonSize, buttonSize);
-            gridLayout->addWidget(button, row, col);
+            gridLayout->addWidget(button, rank, file);
 
-            connect(button, &QPushButton::clicked, this, [this, row, col]() {
-                handleButtonClick(row, col);
+            connect(button, &QPushButton::clicked, this, [this, rank, file]() {
+                handleButtonClick(rank, file);
             });
         }
     }
@@ -48,13 +48,13 @@ void GUI::renderBoard() {
     spritePositions.insert(PieceType::ROOK, QRect(580, 40, 120, 120));
     spritePositions.insert(PieceType::PAWN, QRect(720, 40, 120, 120));
 
-    for (int row = 0; row < 8; ++row) {
-        for (int col = 0; col < 8; ++col) {
-            QString objectName = "ChessButton_" + QString::number(row) + "_" + QString::number(col);
+    for (int rank = 0; rank < Board::BOARD_ROWS; ++rank) {
+        for (int file = 0; file < Board::BOARD_COLS; ++file) {
+            QString objectName = "ChessButton_" + QString::number(Board::BOARD_ROWS - 1 - rank) + "_" + QString::number(file);
             auto* button = findChild<QPushButton*>(objectName);
             if (button) {
                 button->setText("");
-                int piece = board->getPieceAtSquare({row, col});
+                int piece = board->getPieceAtSquare({rank, file});
                 if (piece != -1) {
                     auto pieceType = static_cast<PieceType>(piece % 6);
 
@@ -65,7 +65,7 @@ void GUI::renderBoard() {
                     button->setIconSize(button->size());
                 }
 
-                if ((row + col) % 2 == 0) {
+                if ((rank + file) % 2 == 0) {
                     button->setStyleSheet("background-color: white");
                 } else {
                     button->setStyleSheet("background-color: green");
