@@ -5,15 +5,18 @@
 #include "QGridLayout"
 #include "QPushButton"
 #include "QLabel"
+#include "../engine/Board.h"
 
 class GUI : public QMainWindow {
 public:
-    GUI();
+    GUI(Board *board);
 
 private:
-    void handleButtonClick();
+    Board* board;
 
-    void connectButtons();
+    void renderBoard();
+
+    void handleButtonClick(int row, int col);
 };
 
 #endif
