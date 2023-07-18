@@ -8,11 +8,30 @@
 struct Square {
     int rank;
     int file;
+
+    bool isValid() const {
+        return rank >= 0 && rank < 8 && file >= 0 && file < 8;
+    }
+
+    static Square invalid() {
+        return {-1, -1};
+    }
+
+    bool operator==(const Square& other) const {
+        return (rank == other.rank) && (file == other.file);
+    }
+
+    bool operator!=(const Square& other) const {
+        return !(*this == other);
+    }
 };
 
 struct Move {
     Square sourceSquare;
     Square targetSquare;
+
+    Move(const Square& source, const Square& target)
+        : sourceSquare(source), targetSquare(target) {}
 };
 
 
@@ -42,6 +61,8 @@ public:
     [[nodiscard]] PieceColor getPieceColor(Square square) const;
 
     void makeMove(const Move &move);
+
+    bool isValidMove(const Move& move) const;
 };
 
 

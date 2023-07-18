@@ -14,6 +14,8 @@ public:
 private:
     Board* board;
 
+    Square selectedSquare = Square::invalid();
+
     void renderBoard();
 
     void handleButtonClick(int row, int col);

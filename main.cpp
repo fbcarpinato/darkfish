@@ -2,7 +2,6 @@
 #include <QApplication>
 
 #include "src/gui/GUI.h"
-#include "src/gui/BoardPrinter.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -15,8 +14,6 @@ int main(int argc, char *argv[]) {
     GUI gui(&board);
     gui.show();
     gui.setFixedSize(gui.size());
-
-    BoardPrinter::print(board);
 
     return QApplication::exec();
 }
